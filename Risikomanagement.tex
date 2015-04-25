@@ -1,0 +1,112 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage[german]{babel} 
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% \usepackage{mathptmx} % Times New Roman
+
+\setlength{\topmargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
+\setlength{\textheight}{243.119mm} % 297mm-40mm-10mm-(11pt=3.881mm)=
+\setlength{\oddsidemargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
+\setlength{\textwidth}{160mm} % 210mm-50mm=160mm
+\setlength{\headheight}{0mm}
+\setlength{\headsep}{0mm}
+\setlength{\footskip}{15mm}
+
+\providecommand*{\note}[1]{\small \textcolor{RoyalBlue}{\begin{minipage}{\textwidth}{#1}\end{minipage}}}
+
+% --------------------------------------------------------------
+
+\providecommand*{\ShortTitle}{Übung Teil 1}
+
+
+% --------------------------------------------------------------
+
+\title{\textbf{\sffamily\Huge \ShortTitle}\\ 
+{}
+\vspace{1cm}}
+
+\author{
+{\em 183.131: Risikomanagement} \vspace{1cm} \\
+Group: $<$GID$>$\bigskip \\
+$<$Author1$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author1@tuwien.ac.at}{author1@tuwien.ac.at}}\\
+$<$Author2$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author2@tuwien.ac.at}{author1@tuwien.ac.at}}\\
+$<$Author3$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author3@tuwien.ac.at}{author1@tuwien.ac.at}}\\
+$<$Author4$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author4@tuwien.ac.at}{author1@tuwien.ac.at}}\\ 
+\vspace{4cm}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+
+\end{titlepage}
+
+% --------------------------------------------------------------
+
+\thispagestyle{empty}
+\tableofcontents
+\pagebreak
+
+\setcounter{page}{1}
+
+
+% --------------------------------------------------------------
+\section{Definition und Grundlagen Risikomanagement}
+\label{sect:grundlagen}
+
+
+% --------------------------------------------------------------
+\section{Software, Plattformen und Apps im Risikomanagement}
+\label{sect:software}
+
+
+
+% --------------------------------------------------------------
+\section{Risikomanagement im Bereich Service und Data Clouds}
+\label{sect:clouds}
+
+
+
+% --------------------------------------------------------------
+\section{Risikomanagnement im Kontext von Smart Technologien}
+\label{sect:relevance}
+
+
+
+% --------------------------------------------------------------
+% APPENDIX
+\begin{appendix}
+
+\pagebreak
+
+% --------------------------------------------------------------
+% References
+\phantomsection
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+
+\bibliographystyle{apalike}
+\bibliography{risk2015}
+
+\pagebreak
+
+% --------------------------------------------------------------
+% Abbreviations
+\section*{Abkürzungen}
+ \addcontentsline{toc}{section}{Abkürzungen}
+ 
+ \begin{description}
+  \item[Ex] Example
+  \item[WP] Work Package
+ \end{description}
+
+\end{appendix}
+
+
+\end{document}
