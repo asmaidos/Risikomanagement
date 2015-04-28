@@ -1,112 +1,100 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass{report}
 
+\usepackage{float}
+\usepackage{url}
 \usepackage{graphicx}
-\usepackage{natbib}
-\usepackage[utf8]{inputenc}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\usepackage[german]{babel} 
+\usepackage{listings}
 \usepackage{color}
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-% \usepackage{mathptmx} % Times New Roman
+\usepackage{verbatim}
+\usepackage[lined,linesnumbered,algochapter]{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usepackage{xspace}
+\usepackage{caption}
+%\usepackage[colorlinks = true, urlcolor  = blue]{hyperref}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
 
-\setlength{\topmargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
-\setlength{\textheight}{243.119mm} % 297mm-40mm-10mm-(11pt=3.881mm)=
-\setlength{\oddsidemargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
-\setlength{\textwidth}{160mm} % 210mm-50mm=160mm
-\setlength{\headheight}{0mm}
-\setlength{\headsep}{0mm}
-\setlength{\footskip}{15mm}
+%\hypersetup{colorlinks=false, linkcolor=red}
 
-\providecommand*{\note}[1]{\small \textcolor{RoyalBlue}{\begin{minipage}{\textwidth}{#1}\end{minipage}}}
+\usepackage{ngerman}
+\usepackage[ngerman, english]{babel}
+\usepackage{bibgerm,cite}       % Deutsche Bezeichnungen, Automatisches Zusammenfassen von Literaturstellen
+\usepackage[ngerman]{varioref}  % Querverweise
 
-% --------------------------------------------------------------
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
-\providecommand*{\ShortTitle}{Übung Teil 1}
+\lstset{language=Java,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{darkgreen},stringstyle=\color{red},numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
 
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{3}
 
-% --------------------------------------------------------------
+% another code presentation stlye
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%  language=Java,
+%  aboveskip=3mm,
+%  belowskip=3mm,
+%  showstringspaces=false,
+%  columns=flexible,
+%  basicstyle={\small\ttfamily},
+%  numbers=none,
+%  numberstyle=\tiny\color{gray},
+%  keywordstyle=\color{blue},
+%  commentstyle=\color{dkgreen},
+%  stringstyle=\color{mauve},
+%  breaklines=true,
+%  breakatwhitespace=true
+%  tabsize=3
+%}
 
-\title{\textbf{\sffamily\Huge \ShortTitle}\\ 
-{}
-\vspace{1cm}}
-
-\author{
-{\em 183.131: Risikomanagement} \vspace{1cm} \\
-Group: $<$GID$>$\bigskip \\
-$<$Author1$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author1@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author2$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author2@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author3$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author3@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author4$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author4@tuwien.ac.at}{author1@tuwien.ac.at}}\\ 
-\vspace{4cm}
-}
+% define custom macros for specific formats or names
+\newcommand{\uml}[1]{\texttt{#1}}
+\newcommand{\cd}{\textsf{Class Diagram}}
 
 \begin{document}
+\pagestyle{plain}
+\pagenumbering{roman}
 
-\begin{titlepage}
+\title{Risikomanagement}
+
+
 \maketitle
 
-\end{titlepage}
-
-% --------------------------------------------------------------
-
-\thispagestyle{empty}
 \tableofcontents
-\pagebreak
+\newpage
 
-\setcounter{page}{1}
+\pagenumbering{arabic}
 
-
+% Kapitel
 % --------------------------------------------------------------
-\section{Definition und Grundlagen Risikomanagement}
+\chapter{Definition und Grundlagen Risikomanagement}
 \label{sect:grundlagen}
 
 
 % --------------------------------------------------------------
-\section{Software, Plattformen und Apps im Risikomanagement}
+\chapter{Software, Plattformen und Apps im Risikomanagement}
 \label{sect:software}
 
 
 
 % --------------------------------------------------------------
-\section{Risikomanagement im Bereich Service und Data Clouds}
+\chapter{Risikomanagement im Bereich Service und Data Clouds}
 \label{sect:clouds}
 
 
 
 % --------------------------------------------------------------
-\section{Risikomanagnement im Kontext von Smart Technologien}
+\chapter{Risikomanagnement im Kontext von Smart Technologien}
 \label{sect:relevance}
 
 
-
-% --------------------------------------------------------------
-% APPENDIX
-\begin{appendix}
-
-\pagebreak
-
-% --------------------------------------------------------------
-% References
-\phantomsection
-\addcontentsline{toc}{section}{Literaturverzeichnis}
-
-\bibliographystyle{apalike}
+\bibliographystyle{acm}
 \bibliography{risk2015}
-
-\pagebreak
-
-% --------------------------------------------------------------
-% Abbreviations
-\section*{Abkürzungen}
- \addcontentsline{toc}{section}{Abkürzungen}
- 
- \begin{description}
-  \item[Ex] Example
-  \item[WP] Work Package
- \end{description}
-
-\end{appendix}
-
 
 \end{document}
