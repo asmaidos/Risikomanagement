@@ -85,6 +85,106 @@
 % --------------------------------------------------------------
 \chapter{Risikomanagement im Bereich Service und Data Clouds}
 \label{sect:clouds}
+\chapter{Risikomanagement im Bereich Service \& Data Clouds}
+
+\section{Einleitung}
+Cloud Computing beschreibt das Auslagern von Rechenleistung und Daten in eine externe IT-Infrastruktur, die sogenannte Cloud, welche von einem Provider zur Verfügung gestellt wird. Diese kann entweder zentral oder verteilt auf mehrere Server liegen und bietet dem Benutzer Zugriff auf virtuelle Ressourcen. Für den Benutzer erscheinen Rechenleistung, Datenspeicher, Netzwerkkapazitäten oder gar fertige Softwareprogramme komplett abstrahiert. Die Ressourcen stehen dabei dynamisch zur Verfügung und können je nach momentaner Auslastung angepasst werden. Im Gegensatz zum klassischen "Outsourcing", bei welchem zum Beispiel Rechenleistung eines Dienstleisters exklusiv beansprucht wird, wird die IT-Infrastruktur beim Cloud Computing von mehreren Benutzern gleichzeitig verwendet. Hierbei gibt es allerdings verschiedene sogenannte Deployment Modelle, auf welche später detailliert eingegangen wird. Des Weiteren können auch anhand der Abstraktionsebene verschiedene Service Modelle unterschieden werden. 
+
+\section{IT-Infrastrukturmanagement im Bereich von Service und Data Clouds}
+Um besser verstehen zu können, welche Risiken speziell bei Cloud Computing auftreten, wird im Folgenden eine kurze allgemeine Einführung in Cloud Computing und dessen IT-Infrastrukturmanagement gegeben, ehe die einzelnen Risiken aufgeführt und erläutert werden. \cite{koe2013} \cite{haa2013}
+
+\subsection{Charakteristiken des Cloud Computings}
+Cloud Computing zeichnet sich durch eine Reihe von Charakteristiken aus, welche vom NIST (National Institute of Standards and Technology) definiert wurden.
+
+\subsubsection{On-demand self-service}
+Der Service wird dem Benutzer ohne notwendige Hilfe des Providers zur Verfügung gestellt, so dass dieser jederzeit bei Bedarf auf die benötigten Ressourcen zugreifen kann.
+
+\subsubsection{Broad network access}
+Auf die IT-Infrastruktur wird über Netzwerk (Internet) über definierte Schnittstellen zugegriffen werden.
+
+\subsubsection{Resource pooling}
+Ressourcen, welche von der Cloud zur Verfügung gestellt werden, können in der Regel von mehreren Benutzern gleichzeitig beansprucht werden. Die einzelnen Komponenten werden so zusammengefasst (gepoolt), dass der Benutzer keinen Einfluss darauf nehmen kann, welche Ressource im zur Verfügung gestellt wird.
+
+\subsubsection{Rapid elasticity}
+IT-Komponenten können aufgrund sich schnell ändernder Belastungen sehr flexibel und schnell zusätzlich hinzugefügt oder wieder entzogen werden. Dies garantiert beste Ressourcenauslastung (Effizienz) bei möglichst geringen Überlastungsrisiko.
+
+\subsubsection{Measured service}
+Die Nutzung der Cloud Services wird ständig überwacht und gemessen, was sowohl für Provider als auch Nutzer die Benutzung transparent macht.
+
+\subsection{Cloud Computing Service Modelle}
+Im Zusammenhang mit Cloud Computing können verschiedene Nutzungsmodelle unterschieden werden. Diese unterscheiden sich vor allem darin, auf welcher Abstraktionsebene die IT-Komponenten der Cloud dem Kunden zur Verfügung gestellt werden. In der Literatur wird meist zwischen drei oder vier unterschieden.
+
+\subsubsection{Infrastructure as a Service - IaaS}
+Es werden grundlegende IT-Ressourcen wie Prozessorkapazität, Speicher, Netzwerke usw. zur Nutzung bereit gestellt. Diese Infrastruktur kann vom Kunden genutzt werden um beliebige Betriebssysteme, Software und Netzwerkapplikationen (Host Firewalls) laufen zu lassen. Dieses Service Modell stellt die unterste Abstraktionsebene dar, auf welcher der Kunde am meisten Einfluss auf die dahinter liegende Struktur hat.
+
+\subsubsection{Platform as a Service - Paas}
+Dem Benutzer wird eine Plattform zum Entwickeln eigener Software bereit gestellt. Diese Plattform bietet definierte Programmiersprachen, Libraries und Tools um die Softwareentwicklung zu unterstützen.
+
+\subsubsection{Software as a Service - SaaS}
+Bei diesem Service Modell kann der Benutzer fertige Software Applikationen nutzen, dabei bleibt die zugrunde liegende Infrastruktur zur Gänze verborgen. Dieses Modell stellt die oberste Abstraktionsebene dar, auf welcher der Kunde lediglich über definierte Schnittstelle die Services von bereits fertig implementierter Software nutzt.
+
+\subsubsection{Business Process as a Service - BPaaS}
+Dieses Service Modell wird nicht immer extra angeführt. Es beschreibt im Prinzip die Abbildung eines ganzen Business Prozesses bestehend aus mehreren Komponenten als SaaS.
+
+\subsection{Deployment Modelle}
+Ein weiteres wichtiges Unterscheidungsmerkmal verschiedener Cloud Service Provider sind die unterschiedlichen Deployment Modelle. Diese sind vor allem für die spätere Risikoidentifikation interessant, da hier beschrieben wird, wer Zugriff auf die Daten in der Cloud hat. Die beiden wichtigsten Modell sind "Private Cloud" und "Public Cloud" wobei in der Literatur manchmal auch noch "Community Cloud" und "Hybrid Cloud" angeführt werden.
+
+\subsubsection{Private Cloud}
+Bei diesem Modell steht die komplette Cloud Infrastruktur einer einzigen Organisation exklusiv zur Verfügung.
+
+\subsubsection{Community Cloud}
+Bei der Community Cloud stehen die einzelnen Cloud Komponenten einer definierten Gemeinschaft zur Verfügung, welche gemeinsame Interessen hinsichtlich Sicherheitsanforderungen, Policy usw. verfolgt.
+
+\subsubsection{Public Cloud}
+Die Cloud Infrastruktur steht der Öffentlichkeit zur Verfügung und kann von jedem frei benutzt werden.
+
+\subsubsection{Hybrid Cloud}
+Dabei handelt es sich um eine Kombination aus zwei oder mehr der oben genannten Modelle.
+
+\section{Typische Risiken bei modernen Service \& Data Clouds}
+Im folgenden Abschnitt werden typische Risiken, welche sich aus der speziellen Struktur von Cloud Computing Services ergeben erläutert. Aufgrund der Auslagerung von Rechenkapazitäten oder Datenspeicher entsteht eine gewisse Abhängigkeit vom Cloud Computing Service Provider. Diese Abhängigkeiten können zu verschiedensten Risiken führen. Ein weiterer wichtiger Faktor für die Entstehung von Risiken ist die Undurchsichtigkeit der Datenstruktur einer Cloud Plattform.  
+
+\subsection{Security}
+Je nach Deployment Modell wird jegliche Kontrolle über die IT-Infrastruktur an den Provider abgegeben. Beim Software as a Service Modell muss der Benutzer den Sicherheitsrichtlinien des Providers durch alle Ebenen hindurch von Betriebssystem über Netzwerk bis hin zur Software vertrauen. Beim Platform as a Service Modell kann zwar mehr Einfluss auf verwendete Sicherheitsmechanismen genommen werden, allerdings wird auch hier ein Großteil der Kontrolle an den Provider abgegeben. Als zusätzliches Risiko kommt hinzu, dass gerade große Cloud Plattformen ein sehr interessantes Ziel für potentielle Hacker Angriffe sind, da hier meistens sehr große Datenmengen auf einmal gestohlen werden können. Es können zwar bestimmte Vereinbarungen hinsichtlich Security vertraglich geregelt werden, letztendlich ist man aber auf die implementieren Mechanismen des Providers angewiesen und gibt die eigene Kontrollmöglichkeit weitgehend aus der Hand.  \cite{bro2008} 
+
+\subsection{Ausfall}
+Durch Nutzung von Cloud Computing entstehen nicht beeinflussbare Risiken bezüglich Ausfall des Cloud Services oder generellere Nicht-Erfüllung der zugesicherten Nutzungsbandbreite und Datenverlust. Es ist daher äußerst wichtig, solche Ausfälle im Vorhinein genauestens vertraglich zu erfassen um im Schadensfall etwaige Ausgleichszahlungen zu erhalten. Dazu muss genau abgeschätzt werden, welches Schadenausmaß ein etwaiger Ausfall annehmen kann und wie wahrscheinlich dieser ist. Der Kunde muss bei der Ausfallswahrscheinlichkeitsminimierung wiederum den Mechanismen des Provider vertrauen ohne darauf signifikant Einfluss nehmen zu können. Dies beinhaltet auch etwaige Recovery Mechanismen.  
+
+\subsection{Supply-Chain Risiken}
+Cloud Computing Provider greifen für die Bereitstellung ihrer Services selbst oft auf Drittanbieter zurück, welche wiederum andere Dienstleister einbeziehen. So können komplexe sogenannte "Supply-Chains" entstehen, welche aufgrund der unzähligen einzelnen Sub-Unternehmen ein schwer zu kalkulierendes Risiko darstellen können. Ein Ausfall einer einzelnen Komponente kann unter Umständen die ganze Supply-Chain beeinträchtigen oder sogar zum einem Totalausfall führen.  \cite{haa2013}
+
+\subsection{Veränderungen}
+Cloud Computing Plattformen unterliegen wie jede andere Firma im Technologie Bereich ständigen Veränderungen. Diese Veränderungen können sich auf die Services oder deren Preise auswirken. So kann beispielsweise ein neues Business Modell oder neue firmenpolitische Strategien die angebotenen Services einschränken oder sogar teilweise abschaffen. Des Weiteren können sich solche Entscheidungen auch auf die Verfügbarkeit oder Kosten auswirken. Hier ist es wiederum wichtig, den Umfang und eine detaillierte Beschreibung der benötigten Services in Verträgen festzuhalten. \cite{mos2011}
+
+
+\section{Risiken im Bereich Big Data}
+Ein zentrales Thema bezüglich Risikomanagement in Data und Service Cloud Systemen ist der Umgang mit Daten. Die teilweise undurchsichtigen Strukturen von Cloud IT-Infrastrukturen erschweren es den Überblick über Freigabe, Standort und Sicherheit von Daten zu behalten. Diese Tatsache ergibt sich aufgrund der Resource Pooling Charakteristik von Cloud Services. Dieses Konzept hat zur Folge, dass man als Kunde keinen Einfluss darauf hat wo die eigenen Daten gespeichert werden. Diese Undurchsichtigkeit bringt einige Risiken mit sich, welche im Folgenden erläutert werden. 
+
+\subsection{Internal Segmentation}
+Cloud Provider, welche nicht Private Cloud als Deployment Modell verwenden bieten ihre Dienste mehreren Organisationen an. Aufgrund der oft undurchsichtigen zugrunde liegenden Datenstruktur besteht das Risiko, das geheime Daten einer Organisation einer anderen fälschlicher Weise zugänglich gemacht werden. Dies kann entweder aufgrund interner Fehler oder aber auch absichtlich durch gezielte Hacker Angriffe geschehen. \cite{mos2011}
+
+\subsection{E-Discovery}
+Da die Daten auf dem System des Providers gespeichert werden, begibt man diese in den rechtlichen Geltungsbereich des Providers. Wenn gegen diesen nun aufgrund strafrechtlicher Aktionen Untersuchungen vorgenommen werden, kann es sein, dass nicht nur die Daten des Providers, sondern auch die Daten der Nutzer offen gelegt werden müssen. Dies kann auch dann der Fall sein, wenn der Nutzer nur teilweise oder gar nicht in die Untersuchungen involviert ist. \cite{mos2011}
+
+\subsection{Datenschutz}
+Wenn die Daten auf einer undurchsichtigen Cloud Infrastruktur gespeichert werden, welche dem Open Data Prinzip obliegt, so sind diese für jedermann zugänglich. Der Benutzer sollte daher darauf achten, keine kritischen oder personenbezogenen Daten, welche aus datenschutzrechtlichen Gründen nicht öffentlich gemacht werden dürfen, auf so einer Plattform zu speichern. Doch auch im Falle einer Closed Data Struktur besteht aufgrund der vorher genannten Risiken die Gefahr, dass die Daten an die Öffentlichkeit gelangen. Dies kann zum Beispiel auch daran liegen, dass gewisse Big Data Systeme wie zum Beispiel Hadoop nicht von Anfang an darauf ausgelegt wurden, geheime Unternehmensdaten zu speichern. Es ging am Anfang einfach nur darum, enorm große, unstrukturierte Datenmengen verteilt speichern zu können. Diese Design Entscheidungen machen es teilweise schwierig im Nachhinein bestimmte Sicherheitsmechanismen zu implementieren. \cite{haa2013}
+
+\subsection{Verfügbarkeit}
+Daten, welche auf einem Cloud Provider gespeichert sind obliegen dessen Verantwortung. Dies kann zu Problemen führen, wenn dieser zum Beispiel von einer anderen Organisation aufgekauft wird oder selber in Konkurs geht. Für diese Fälle muss unbedingt im Vorhinein eine Backup Strategie überlegt werden. Des Weiteren müssen auch Katastrophenfälle und die danach eventuell notwendige Daten Recovery berücksichtigt werden. \cite{mos2011}
+
+\section{Risiken aus Provider-Sicht}
+Auch aus der Sicht von Cloud Providern ergeben sich Risiken, welche die spezielle Struktur von solchen Plattformen als Ursache haben.
+
+\subsection{Hacker Attacken}
+Wie schon weiter vorher erwähnt sind vor allem Cloud Plattformen ein begehrtes Ziel für Hacker Angriffe. Dies liegt zum einen daran, dass hier sehr viele Daten gespeichert werden. Zum anderen müssen Cloud Service Provider ihre Schnittstellen für das Internet und die breite Öffentlichkeit zugänglich machen, was es potentiellen Hackern erleichtert in das System einzudringen. \cite{mos2011}
+
+\subsection{Unbemerkter Datenverlust}
+Allzu oft kommt es vor, dass Daten gestohlen werden, ohne dass die betroffene Organisation das merkt und den Cloud Provider davon informieren kann. Dieser kann daher erst sehr verspätet darauf reagieren und ein Durchdringen der Attacke an die Öffentlichkeit, was mit einem erheblichen Image Schaden verbunden ist, nicht mehr verhindern.\cite{mos2011}
+
+\subsection{Verteilte Datenspeicher}
+Ein Cloud System verteilt die Daten auf mehrere Server. Dabei muss immer darauf geachtet werden, welche Daten in welche Region oder in welches Land gespeichert werden, da es in diesem Bereich oftmals rechtliche Vorgaben seitens des Gesetzes oder auch Vorgaben der Organisation geben kann. \cite{mos2011}
+
+
 
 
 
