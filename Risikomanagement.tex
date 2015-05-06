@@ -1,112 +1,497 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass{report}
 
+\usepackage{float}
+\usepackage{url}
 \usepackage{graphicx}
-\usepackage{natbib}
-\usepackage[utf8]{inputenc}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\usepackage[german]{babel} 
+\usepackage{listings}
 \usepackage{color}
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-% \usepackage{mathptmx} % Times New Roman
+\usepackage{verbatim}
+\usepackage[lined,linesnumbered,algochapter]{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usepackage{xspace}
+\usepackage{caption}
+%\usepackage[colorlinks = true, urlcolor  = blue]{hyperref}
+\usepackage{ucs}
+\usepackage[utf8]{inputenc}
 
-\setlength{\topmargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
-\setlength{\textheight}{243.119mm} % 297mm-40mm-10mm-(11pt=3.881mm)=
-\setlength{\oddsidemargin}{-0.4mm} % (1in=25.4mm)-0.4mm=25mm
-\setlength{\textwidth}{160mm} % 210mm-50mm=160mm
-\setlength{\headheight}{0mm}
-\setlength{\headsep}{0mm}
-\setlength{\footskip}{15mm}
+%\hypersetup{colorlinks=false, linkcolor=red}
 
-\providecommand*{\note}[1]{\small \textcolor{RoyalBlue}{\begin{minipage}{\textwidth}{#1}\end{minipage}}}
+\usepackage{ngerman}
+\usepackage[ngerman, english]{babel}
+\usepackage{bibgerm,cite}       % Deutsche Bezeichnungen, Automatisches Zusammenfassen von Literaturstellen
+\usepackage[ngerman]{varioref}  % Querverweise
 
-% --------------------------------------------------------------
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
-\providecommand*{\ShortTitle}{Übung Teil 1}
+\lstset{language=Java,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{darkgreen},stringstyle=\color{red},numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
 
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{3}
 
-% --------------------------------------------------------------
+% another code presentation stlye
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%  language=Java,
+%  aboveskip=3mm,
+%  belowskip=3mm,
+%  showstringspaces=false,
+%  columns=flexible,
+%  basicstyle={\small\ttfamily},
+%  numbers=none,
+%  numberstyle=\tiny\color{gray},
+%  keywordstyle=\color{blue},
+%  commentstyle=\color{dkgreen},
+%  stringstyle=\color{mauve},
+%  breaklines=true,
+%  breakatwhitespace=true
+%  tabsize=3
+%}
 
-\title{\textbf{\sffamily\Huge \ShortTitle}\\ 
-{}
-\vspace{1cm}}
-
-\author{
-{\em 183.131: Risikomanagement} \vspace{1cm} \\
-Group: $<$GID$>$\bigskip \\
-$<$Author1$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author1@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author2$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author2@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author3$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author3@tuwien.ac.at}{author1@tuwien.ac.at}}\\
-$<$Author4$>$ \\ {\small $<$Matrikelnr.$>$, $<$Kennzahl$>$, \href{mailto:author4@tuwien.ac.at}{author1@tuwien.ac.at}}\\ 
-\vspace{4cm}
-}
+% define custom macros for specific formats or names
+\newcommand{\uml}[1]{\texttt{#1}}
+\newcommand{\cd}{\textsf{Class Diagram}}
 
 \begin{document}
+\pagestyle{plain}
+\pagenumbering{roman}
 
-\begin{titlepage}
+\title{Risikomanagement}
+
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% Name and address of the author
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+\author{
+  Seidl, Christoph\\
+  \texttt{0427434}
+  \\[3ex]
+  Sattlecker, Thomas\\
+  \texttt{0926566}
+\\[3ex]
+  Martin, Kaufleitner\\
+  \texttt{1027229}
+\\[3ex]
+  Levent, Ak\\
+  \texttt{0725083}
+}
+
+%
+%\institute{\email{e0926566@mail.student.tuwien.ac.at} \\ Registration No.: 0926566
+%\and \email{e0828922@mail.student.tuwien.ac.at} \\ Registration No.: 0828922
+%\and \email{e0926556@mail.student.tuwien.ac.at} \\ Registration No.: 0926556
+%}
+
+
 \maketitle
 
-\end{titlepage}
-
-% --------------------------------------------------------------
-
-\thispagestyle{empty}
 \tableofcontents
-\pagebreak
+\newpage
 
-\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% Kapitel
+% --------------------------------------------------------------
+\chapter{Definition und Grundlagen Risikomanagement}
+\section{Einleitung}
+
+\begin{center}
+"Whatever can go wrong will go wrong" Murphy's Law\cite{WikiM}
+\end{center}
+
+Eine der wichtigsten Aussagen über komplexe Systeme ist Murphy's Law. Es wird auch Fourth Law of Thermodynamics genannt und besagt, das alles was schiefgehen kann auch schiefgehen wird . Doch woher kommt diese pessimistische Sicht auf mögliche Risiken. Das Gesetz ist nach dem NASA Techniker Ed Murphy benannt. Er war einer der Verantwortlichen in einer außerordentlichen kostspieligen Versuchsreihe, bei der Sensoren verwendet wurden, um herauszufinden welche Beschleunigungen der menschliche Körper aushalten kann.  Das Experiment endete in einem Desaster , da alle Sensoren falsch verdrahtet waren, wobei es nur 2 Möglichkeiten gab sie zu verdrahten. 
+\newline
+\newline
+Doch wo genau liegt der Zusammenhang zwischen Murphy's Law und Risikomanagement. Der technologische und wirtschaftliche Fortschritt führte dazu, dass  sich die Komplexität von Prozessen massiv steigerte. Ein ausgezeichnetes Beispiel für die steigende Komplexität, ist die IT Branche. Unternehmen wie Facebook, Google und Microsoft starteten mit einigen Technik begeisterten Mitarbeiter, welche visionäre Projekte mit eingeschränkten Ressourcen realisieren konnten. Die heutige IT Landschaft ist äußerst vielfältig und komplex. Diese Komplexität führt wiederum dazu, dass sich die Anzahl der möglichen Gefahrenquellen erhöht. Und wie schon Murphy's Law besagt, alles was schiefgehen kann, wird auch schiefgehen. 
+\newline
+\newline
+Um sich gegen mögliche Risiken zu schützen wurde Risikomanagement entwickelt. Bei Risikomanagement handelt es sich um Prozesse, welche sich um die Vorbeugung und die Verminderungen von Risiken kümmern. Doch was genau ist ein Risiko\cite{WikiR}. Bei einem Risiko handelt es sich allgemein um ein Ereignis, welches negative Auswirkungen hat. Dieses Ereignis hat eine bestimmte Eintrittswahrscheinlichkeit und verursacht einen Schaden.  Risikomanagement befasst sich mit der Analyse von möglichen Risiken, wie der Eintritt dieser Risiken verhindert werden kann, bzw. wie man darauf reagieren soll wenn ein Risiko zu einer Gefahr wird.  
+\newline
+\newline
+Wieso sollte ein Unternehmen Geld in Maßnahmen investieren die möglicherweise keine direkten Auswirkungen auf den Gewinn haben. Man muss nur einen Blick auf gescheiterte Projekte werfen und man erkennt sehr schnell, dass die meisten Probleme mit einem effektiven Risikomanagement zu lösen gewesen wären. Die Unicredit hätte sich eine Menge Geld und Ärger bei der Umstellung ihres Online Bankingsystems erspart, hätte sie einen vernünftigen Recoveryplan gehabt.     
+\newline
+\newline
+Risikomanagement ist ein äußerst wichtiges Thema, doch wird es meistens eher  Stiefmütterlich behandelt. Es gibt eine Korrelation zwischen Komplexität von Projekten und Geschäftsprozessen und dem Einsatz von Risikomanagement in Unternehmen. In kleinen Firmen wird Risikomanagement nicht den gleichen Stellenwert haben, wie etwa bei großen Banken und Fluglinien. Doch selbst das beste  Risikomanagement garantiert nicht, dass ein Unternehmen gegen alle Risiken gesichert ist.
+\newline
+\newline
+Doch was genau ist Risikomanagement, und wie ist es definiert. Grundsätzlich gibt es viele Definitionen von Risikomanagement. Die wahrscheinlich beste Definition ist der ISO 31000 Standard.
+
+\section{ISO 31000 Standard}
+Im Jahre 2005 beschloss die ISO einen einheitlichen Standard im Bereich Risikomanagement zu verfassen. Es handelt sich bei diesem Standard, nicht nur um eine simple Definition, sondern es handelt es sich um ein komplettes Regelwerk von möglichen Lösungsansätzen im Bereich Enterprise Risikomanagement. Der ISO 31000 Standard gliedert sich in drei Teile: Grundsätze, Risikomanagement Framework und Risikomanagement Framework\cite{Bruehwilder}. 
+
+
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \includegraphics[scale=0.4]{Images/ISO31000.png}
+  }
+  \caption{ISO 31000}
+  \label{fig:bruehilder}
+\end{figure}
+
+
+
+ 
+
+\subsection{Grundsätze}
+\emph{Risikomanagement schafft und beschützt Werte:}
+\newline
+Das Ziel von Risikomanagement ist es, durch Maßnahmen im Bereich Safety, Security, Compliance, Qualitätssicherung und Projektmanagement einen Mehrwert für das Unternehmen zu erschaffen.
+\newline
+\newline
+\emph{Risikomanagement ist ein Teil aller Unternehmensprozesse:}
+\newline
+Risikomanagement sollte ein Bestandteil der gesamten strategischen Planungen eines Unternehmens sein. Es sollte einheitliche Standards geben, die auch konsequent eingehalten werden. 
+\newline
+\newline
+\emph{Risikomanagement ist Teil der Entscheidungsfindung:}
+\newline
+Risikomanagement richtet sich an die Bedürfnisse von Entscheidungsträgern. 
+\newline
+\newline
+\emph{Risikomanagement befasst sich ausdrücklich mit Unsicherheiten:}
+\newline
+Risikomanagement befasst sich mit der Wahrscheinlichkeit von Ereignissen.
+\newline
+\newline
+\emph{Risikomanagement ist systematisch, strukturiert und zeitgerecht}
+\newline
+Der Prozess soll systematisch und strukturiert sein, damit vergleichbare und verlässliche Ergebnisse erzielt werden.
+\newline
+\newline
+\emph{Risikoangepasst basiert auf allen verfügbaren Informationen:}
+\newline
+Es sollten alle möglichen Informationen betrachtet werden, um mögliche Gefahren zu finden und um Lösungsvorschläge zu erarbeiten. Dazu zählen Beobachtungen,  Feedback der Beteiligten und externes Expertenwissen. 
+\newline
+\newline
+\emph{Risikomahnagent ist maßgeschneidert:}
+\newline
+Es gibt keine einheitliche Lösung für Risikomanagemen\cite{Klipper}.
+\newline
+\newline
+\emph{Risikomanagement beachtet soziale und kulturelle Faktoren:}
+\newline
+Es müssen alle Fähigkeiten von Menschen berücksichtigt werden, welche mit dem Unternehmen verbunden sind.
+\newline
+\newline
+\emph{Risikomanagement ist transparent und einbeziehend:}
+\newline
+Risikomanagement sollte so durchgeführt werden, dass alle Personen die an Projekten mitarbeiten direkt in der Entscheidungsplanung involviert sind. Weiters sollte der komplette Prozess transparent für alle sein, damit es zu keinen unvorhersehbaren Problemen kommen kann. 
+\newline
+\newline
+\emph{Risikomanagement ist dynamisch, iterativ und reagiert gezielt auf Änderungsprozesse:}
+\newline
+Risikomanagement sollte nicht statisch sein. Es sollte möglich sein, den Prozess so zu adaptieren,  dass er auf Änderungen im System reagieren kann.  
+\newline
+\newline
+\emph{Risikomanagement erleichtert die kontinuierliche Verbesserung:}
+\newline
+Eines der wichtigsten Ziele von Risikomanagement ist es, die Qualität von Prozessen innerhalb eines Unternehmens zu verbessern. 
+\subsection{Risikomanagementprozess}
+Im ISO 31000 Standard besteht der Risikomanagementprozess aus 5 Kernkomponenten: 
+\newline
+\newline
+\emph{Ermittlung des Risikokontext:}
+\newline
+Am Anfang eines Risikoprozesses sollte das Umfeld eines Unternehmens genau erfasst werden. Es sollte versucht werden Risikokriterien aufzustellen, mit denen es möglich ist Risiken zu bewerten. Weiters sollte versucht werden, dass nicht nur das interne Umfeld eines Unternehmens betrachten wird, sondern es sollten auch externe Komponenten, wie Finanzierung und die Beziehung mit Kunden in mögliche Risikoszenarien integriert werden. 
+\newline
+\newline
+\emph{Risiko Identifikation:}
+\newline
+Im nächsten Schritt sollten alle möglichen Risiken identifiziert werden. Es sollte auch kalkuliert werden, welche Auswirkungen diese Risiken auf die Projekte haben.  
+\newline
+\newline
+\emph{Risiko Analyse:}
+\newline
+Die Risiken sollten nicht nur identifiziert werden, sondern es sollte auch versucht werden die Risiken genau zu verstehen. 
+\newline
+\newline
+\emph{Risiko Evaluierung:}
+\newline
+Zusätzlich sollten die Risiken kategorisiert werden, damit man sich auf die zentralen Risiken konzentrieren kann, bzw. falls es eine riesige Mengen an schwerwiegenden Risiken gibt ein guter Indikator dafür ist, dass das Projekt nicht durchführbar ist. 
+\newline
+\newline
+\emph{Risiko Behandlung:}
+\newline
+Der letzte Schritt des Prozesses befasst sich mit der Behandlung von Risiken. ISO 31000 definiert grundsätzlich 4 Arten von Möglichkeiten mit Risiken umzugehen:
+\begin{itemize}
+\item Transfer: Es sollte versucht werden das Risiko mit anderen Parteien zu teilen
+\item Vermeiden: Das Risiko soll vermieden werden, indem die Aktivität, welche das Risiko auslöst nicht gestartet wird oder komplett aus dem Prozess entfernt wird.
+\item Mildern: Es werden Möglichkeiten gesucht, die Wahrscheinlichkeit mit der das Risiko auftritt zu verkleinern bzw. den möglichen Schaden, der durch das Eintreten des Risikos entsteht zu minimieren. 
+\item Akzeptieren: Es wird akzeptiert, dass das Risiko eintreten kann. 
+\end{itemize}
+\subsection{Framework}
+Das Framework orientiert sich äußerst stark an dem PDCA Modell. An oberster Stelle sollte die Verpflichtung des Managements gegenüber Risikomanagements sein. Die restlichen Phasen sind äquivalent zu den Phasen des PDCA.
+\begin{itemize}
+\item Plan: Zuerst sollte eine einheitliche Strategie für Risikomanagement erstellt werden.
+\item Do: In dieser Phase sollte der Risikomanagementprozess angewendet werden
+\item Check: Nachdem das System implementiert worden ist, sollte ständig die Funktionalität des Prozesses überprüft werden 
+\item Act: Aus den gewonnen Erkenntnissen sollen Änderungen an dem System geplant und auch ausgeführt werden.   
+\end{itemize}
+
+\section{COSO Enterprise Risk Management Framework}
+Ein weiterer Standard im Bereich Enterprise Risk Management ist das vom Committee of Sponsoring Organizations of the Treadway Commission entwickelte Enterprise Risk Framework. Das im Jahre 2004 publizierte Framework liefert im Gegensatz zum ISO 31000 keine konkrete Lösungen für das Risikomanagement eines Unternehmen, sondern versucht die bestehenden Risikomanagementprozesse eines Unternehmens zu optimieren\cite{COSO}.
+\newline
+\newline
+Grundsätzlich unterscheidet das COSO Framework 4 verschiedene Kategorien von Unternehmensziele:
+\begin{itemize}
+\item Strategische Ziele: Übergeordnete Ziele welche mit der Unternehmensstrategie abgestimmt sind
+\item Betriebliche Ziele: Effektiver Umgang mit Ressourcen
+\item Berichterstattung: Zuverlässigkeit der Berichterstattung
+\item Regeleinhaltung: Definitionen von Regeln und Gesetzen, welche eingehalten werden müssen  
+\end{itemize}
+
+Diese Kategorisierung ermöglicht eine Ausrichtung auf verschiedene Aspekte von Risikomanagement.
+\subsection{Komponenten des COSO Frameworks}
+Das Framework besteht aus 8 eng miteinander verknüpften Komponenten.
+
+
+\begin{itemize}
+\item Internes Umfeld: Im internen Umfeld soll versucht werden die interne Kultur eines Unternehmens abzubilden. Es ist die Grundlage für das Risikomanagement, da sich diese Komponente um die interne Risikophilosophie und Bereitschaft kümmert.
+\item Zielfestlegung: Um überhaupt Risikomanagement betreiben zu können müssen Ziele definiert werden. Diese Ziele sollten im Einklang mit der Unternehmensstrategie sein.
+\item Ereignisidentifikation: Interne und externe Ereignisse müssen bestimmt und in Risiken und Chancen unterteilt werden. 
+\item Risikobeurteilung: Risiken werden unter Berücksichtigung von Auswirkung und Eintrittswahrscheinlichkeit untersucht. Dies stellt die Grundlage für die Steuerung von Risiken dar.
+\item Risikosteuerung: Führungskräfte wählen Konzepte aus, welche es ermöglichen Risiken zu vermeiden oder zu verringern.
+\item Kontrollaktivitäten: Es gibt Vorschriften und Verfahren, die gewährleisten sollen, dass Risikomanagement im Unternehmen durchgeführt wird.
+\item Information und Kommunikation: Informationen müssen festgehalten werden und den Mitarbeitern zur Verfügung gestellt werden
+\item Überwachung: Risikomanagement sollte überwacht werden und es sollte immer versucht werden den Prozess zu optimieren. 
+\end{itemize}
+\section{ONR 49000}
+Ein weiterer Standard der im Zusammenhang mit Risikomanagement erwähnt werden sollte, ist der österreichische ONR 49000 Standard. Dieser Standard verwendet fast alle Komponenten aus dem ISO 31000 Standard, jedoch enthält er auch Lösungsansätze die kein Managementsystem erfordern um den Risikomanagementprozess in Projekten effektiv durchzuführen\cite{COSO}.
+\newline
+\newline
+
+\begin{itemize}
+\item Brainstorming: Vor Beginn eines Projektes sollte sich eine Expertengruppe zusammensetzen, um gemeinsam über Risiken die mit dem Projekt verbunden sind zu diskutieren
+\item Delphimethode: Bei dieser Methode wird ein Fragenkatalog ausgearbeitet, der von allen Mitarbeitern und Stakeholdern des Projektes beantwortet werden soll
+\item Szenarioanalyse: Es wird versucht alle möglichen Projektszenarien durchzuspielen  
+\item Fehlerbaumanalyse: Es wird nach kritischen Pfaden innerhalb eines Projekts gesucht, welche negative Auswirkungen haben.
+\item Critical Incidents Reporting: Alle kritischen Vorkommnisse sollen anonym  erfasst werden. Dies soll dazu führen, dass es zu einem offenen Informationsaustausch kommen kann. 
+\item Monte Carlo Analyse: Versucht die Wahrscheinlichkeit von Risiken und ihre Auswirkung zu berechnen
+\item HAZOP(Hazard and operability study): Bei dieser Methode wird versucht nach Risiken zu suchen, welche innerhalb eines Prozesses entstehen können
+\item HACCP:(Hazard Analysis and Critical Control Points) Die kontinuierliche Überprüfung des Produktes während der Produktion soll die Qualität des Produktes steigern. 
+\end{itemize}
+\section{Zusammenfassung und Trends}
+Wie in der Einleitung schon erwähnt, gibt es bei Projekten eine Korrelation zwischen Komplexität und Risiken. Je komplexer Projekte sind, desto mehr Risiken sind damit behaftet. Um Risiken vorzubeugen muss Risikomanagement betrieben werden. Es gibt viele verschiedene Ansätze in diesem Bereich, doch funktionieren sie meistens nach dem gleichen Prinzip. Es wird zuerst versucht mögliche Gefahrenquellen zu finden. Diese werden dann analysiert, kategorisiert und es werden Maßnahmen entwickelt, um sich auf diese Risiken vorzubereiten. 
+\newline
+\newline
+Risikomanagement wurde früher nur in bestimmten Branchen ernsthaft umgesetzt. Doch in den letzten Jahren geht der Trend dazu, dass Risikomanagement eine zentralere Rolle in Unternehmen einnimmt. Unternehmen können es sich nicht mehr leisten mit Projekten und Produkten zu scheitern. Aus diesem Grund werden immer mehr Planstellen für Risikomanagement geschaffen.
+\newline
+\newline
+Auch wird Risikomanagement nicht mehr nur als notwendiges Übel angesehen, sondern wird verstärkt als Chance wahrgenommen. Ein effektives Risikomanagement kann ein wichtiger Vorteil gegenüber anderen Konkurrenten sein. 
 
 
 % --------------------------------------------------------------
-\section{Definition und Grundlagen Risikomanagement}
-\label{sect:grundlagen}
-
-
-% --------------------------------------------------------------
-\section{Software, Plattformen und Apps im Risikomanagement}
-\label{sect:software}
+\include{Chapters/software}
 
 
 
 % --------------------------------------------------------------
-\section{Risikomanagement im Bereich Service und Data Clouds}
-\label{sect:clouds}
+\chapter{Risikomanagement im Bereich Service \& Data Clouds}
+
+\section{Einleitung}
+Cloud Computing beschreibt das Auslagern von Rechenleistung und Daten in eine externe IT-Infrastruktur, die sogenannte Cloud, welche von einem Provider zur Verfügung gestellt wird. Diese kann entweder zentral oder verteilt auf mehrere Server liegen und bietet dem Benutzer Zugriff auf virtuelle Ressourcen. Für den Benutzer erscheinen Rechenleistung, Datenspeicher, Netzwerkkapazitäten oder gar fertige Softwareprogramme komplett abstrahiert. Die Ressourcen stehen dabei dynamisch zur Verfügung und können je nach momentaner Auslastung angepasst werden. Im Gegensatz zum klassischen "Outsourcing", bei welchem zum Beispiel Rechenleistung eines Dienstleisters exklusiv beansprucht wird, wird die IT-Infrastruktur beim Cloud Computing von mehreren Benutzern gleichzeitig verwendet. Hierbei gibt es allerdings verschiedene sogenannte Deployment Modelle, auf welche später detailliert eingegangen wird. Des Weiteren können auch anhand der Abstraktionsebene verschiedene Service Modelle unterschieden werden. 
+
+\section{IT-Infrastrukturmanagement im Bereich von Service und Data Clouds}
+Um besser verstehen zu können, welche Risiken speziell bei Cloud Computing auftreten, wird im Folgenden eine kurze allgemeine Einführung in Cloud Computing und dessen IT-Infrastrukturmanagement gegeben, ehe die einzelnen Risiken aufgeführt und erläutert werden. \cite{koe2013} \cite{haa2013}
+
+\subsection{Charakteristiken des Cloud Computings}
+Cloud Computing zeichnet sich durch eine Reihe von Charakteristiken aus, welche vom NIST (National Institute of Standards and Technology) definiert wurden.
+
+\subsubsection{On-demand self-service}
+Der Service wird dem Benutzer ohne notwendige Hilfe des Providers zur Verfügung gestellt, so dass dieser jederzeit bei Bedarf auf die benötigten Ressourcen zugreifen kann.
+
+\subsubsection{Broad network access}
+Auf die IT-Infrastruktur wird über Netzwerk (Internet) über definierte Schnittstellen zugegriffen werden.
+
+\subsubsection{Resource pooling}
+Ressourcen, welche von der Cloud zur Verfügung gestellt werden, können in der Regel von mehreren Benutzern gleichzeitig beansprucht werden. Die einzelnen Komponenten werden so zusammengefasst (gepoolt), dass der Benutzer keinen Einfluss darauf nehmen kann, welche Ressource im zur Verfügung gestellt wird.
+
+\subsubsection{Rapid elasticity}
+IT-Komponenten können aufgrund sich schnell ändernder Belastungen sehr flexibel und schnell zusätzlich hinzugefügt oder wieder entzogen werden. Dies garantiert beste Ressourcenauslastung (Effizienz) bei möglichst geringen Überlastungsrisiko.
+
+\subsubsection{Measured service}
+Die Nutzung der Cloud Services wird ständig überwacht und gemessen, was sowohl für Provider als auch Nutzer die Benutzung transparent macht.
+
+\subsection{Cloud Computing Service Modelle}
+Im Zusammenhang mit Cloud Computing können verschiedene Nutzungsmodelle unterschieden werden. Diese unterscheiden sich vor allem darin, auf welcher Abstraktionsebene die IT-Komponenten der Cloud dem Kunden zur Verfügung gestellt werden. In der Literatur wird meist zwischen drei oder vier unterschieden.
+
+\subsubsection{Infrastructure as a Service - IaaS}
+Es werden grundlegende IT-Ressourcen wie Prozessorkapazität, Speicher, Netzwerke usw. zur Nutzung bereit gestellt. Diese Infrastruktur kann vom Kunden genutzt werden um beliebige Betriebssysteme, Software und Netzwerkapplikationen (Host Firewalls) laufen zu lassen. Dieses Service Modell stellt die unterste Abstraktionsebene dar, auf welcher der Kunde am meisten Einfluss auf die dahinter liegende Struktur hat.
+
+\subsubsection{Platform as a Service - Paas}
+Dem Benutzer wird eine Plattform zum Entwickeln eigener Software bereit gestellt. Diese Plattform bietet definierte Programmiersprachen, Libraries und Tools um die Softwareentwicklung zu unterstützen.
+
+\subsubsection{Software as a Service - SaaS}
+Bei diesem Service Modell kann der Benutzer fertige Software Applikationen nutzen, dabei bleibt die zugrunde liegende Infrastruktur zur Gänze verborgen. Dieses Modell stellt die oberste Abstraktionsebene dar, auf welcher der Kunde lediglich über definierte Schnittstelle die Services von bereits fertig implementierter Software nutzt.
+
+\subsubsection{Business Process as a Service - BPaaS}
+Dieses Service Modell wird nicht immer extra angeführt. Es beschreibt im Prinzip die Abbildung eines ganzen Business Prozesses bestehend aus mehreren Komponenten als SaaS.
+
+\subsection{Deployment Modelle}
+Ein weiteres wichtiges Unterscheidungsmerkmal verschiedener Cloud Service Provider sind die unterschiedlichen Deployment Modelle. Diese sind vor allem für die spätere Risikoidentifikation interessant, da hier beschrieben wird, wer Zugriff auf die Daten in der Cloud hat. Die beiden wichtigsten Modell sind "Private Cloud" und "Public Cloud" wobei in der Literatur manchmal auch noch "Community Cloud" und "Hybrid Cloud" angeführt werden.
+
+\subsubsection{Private Cloud}
+Bei diesem Modell steht die komplette Cloud Infrastruktur einer einzigen Organisation exklusiv zur Verfügung.
+
+\subsubsection{Community Cloud}
+Bei der Community Cloud stehen die einzelnen Cloud Komponenten einer definierten Gemeinschaft zur Verfügung, welche gemeinsame Interessen hinsichtlich Sicherheitsanforderungen, Policy usw. verfolgt.
+
+\subsubsection{Public Cloud}
+Die Cloud Infrastruktur steht der Öffentlichkeit zur Verfügung und kann von jedem frei benutzt werden.
+
+\subsubsection{Hybrid Cloud}
+Dabei handelt es sich um eine Kombination aus zwei oder mehr der oben genannten Modelle.
+
+\section{Typische Risiken bei modernen Service \& Data Clouds}
+Im folgenden Abschnitt werden typische Risiken, welche sich aus der speziellen Struktur von Cloud Computing Services ergeben erläutert. Aufgrund der Auslagerung von Rechenkapazitäten oder Datenspeicher entsteht eine gewisse Abhängigkeit vom Cloud Computing Service Provider. Diese Abhängigkeiten können zu verschiedensten Risiken führen. Ein weiterer wichtiger Faktor für die Entstehung von Risiken ist die Undurchsichtigkeit der Datenstruktur einer Cloud Plattform.  
+
+\subsection{Security}
+Je nach Deployment Modell wird jegliche Kontrolle über die IT-Infrastruktur an den Provider abgegeben. Beim Software as a Service Modell muss der Benutzer den Sicherheitsrichtlinien des Providers durch alle Ebenen hindurch von Betriebssystem über Netzwerk bis hin zur Software vertrauen. Beim Platform as a Service Modell kann zwar mehr Einfluss auf verwendete Sicherheitsmechanismen genommen werden, allerdings wird auch hier ein Großteil der Kontrolle an den Provider abgegeben. Als zusätzliches Risiko kommt hinzu, dass gerade große Cloud Plattformen ein sehr interessantes Ziel für potentielle Hacker Angriffe sind, da hier meistens sehr große Datenmengen auf einmal gestohlen werden können. Es können zwar bestimmte Vereinbarungen hinsichtlich Security vertraglich geregelt werden, letztendlich ist man aber auf die implementieren Mechanismen des Providers angewiesen und gibt die eigene Kontrollmöglichkeit weitgehend aus der Hand.  \cite{bro2008} 
+
+\subsection{Ausfall}
+Durch Nutzung von Cloud Computing entstehen nicht beeinflussbare Risiken bezüglich Ausfall des Cloud Services oder generellere Nicht-Erfüllung der zugesicherten Nutzungsbandbreite und Datenverlust. Es ist daher äußerst wichtig, solche Ausfälle im Vorhinein genauestens vertraglich zu erfassen um im Schadensfall etwaige Ausgleichszahlungen zu erhalten. Dazu muss genau abgeschätzt werden, welches Schadenausmaß ein etwaiger Ausfall annehmen kann und wie wahrscheinlich dieser ist. Der Kunde muss bei der Ausfallswahrscheinlichkeitsminimierung wiederum den Mechanismen des Provider vertrauen ohne darauf signifikant Einfluss nehmen zu können. Dies beinhaltet auch etwaige Recovery Mechanismen.  
+
+\subsection{Supply-Chain Risiken}
+Cloud Computing Provider greifen für die Bereitstellung ihrer Services selbst oft auf Drittanbieter zurück, welche wiederum andere Dienstleister einbeziehen. So können komplexe sogenannte "Supply-Chains" entstehen, welche aufgrund der unzähligen einzelnen Sub-Unternehmen ein schwer zu kalkulierendes Risiko darstellen können. Ein Ausfall einer einzelnen Komponente kann unter Umständen die ganze Supply-Chain beeinträchtigen oder sogar zum einem Totalausfall führen.  \cite{haa2013}
+
+\subsection{Veränderungen}
+Cloud Computing Plattformen unterliegen wie jede andere Firma im Technologie Bereich ständigen Veränderungen. Diese Veränderungen können sich auf die Services oder deren Preise auswirken. So kann beispielsweise ein neues Business Modell oder neue firmenpolitische Strategien die angebotenen Services einschränken oder sogar teilweise abschaffen. Des Weiteren können sich solche Entscheidungen auch auf die Verfügbarkeit oder Kosten auswirken. Hier ist es wiederum wichtig, den Umfang und eine detaillierte Beschreibung der benötigten Services in Verträgen festzuhalten. \cite{mos2011}
+
+
+\section{Risiken im Bereich Big Data}
+Ein zentrales Thema bezüglich Risikomanagement in Data und Service Cloud Systemen ist der Umgang mit Daten. Die teilweise undurchsichtigen Strukturen von Cloud IT-Infrastrukturen erschweren es den Überblick über Freigabe, Standort und Sicherheit von Daten zu behalten. Diese Tatsache ergibt sich aufgrund der Resource Pooling Charakteristik von Cloud Services. Dieses Konzept hat zur Folge, dass man als Kunde keinen Einfluss darauf hat wo die eigenen Daten gespeichert werden. Diese Undurchsichtigkeit bringt einige Risiken mit sich, welche im Folgenden erläutert werden. 
+
+\subsection{Internal Segmentation}
+Cloud Provider, welche nicht Private Cloud als Deployment Modell verwenden bieten ihre Dienste mehreren Organisationen an. Aufgrund der oft undurchsichtigen zugrunde liegenden Datenstruktur besteht das Risiko, das geheime Daten einer Organisation einer anderen fälschlicher Weise zugänglich gemacht werden. Dies kann entweder aufgrund interner Fehler oder aber auch absichtlich durch gezielte Hacker Angriffe geschehen. \cite{mos2011}
+
+\subsection{E-Discovery}
+Da die Daten auf dem System des Providers gespeichert werden, begibt man diese in den rechtlichen Geltungsbereich des Providers. Wenn gegen diesen nun aufgrund strafrechtlicher Aktionen Untersuchungen vorgenommen werden, kann es sein, dass nicht nur die Daten des Providers, sondern auch die Daten der Nutzer offen gelegt werden müssen. Dies kann auch dann der Fall sein, wenn der Nutzer nur teilweise oder gar nicht in die Untersuchungen involviert ist. \cite{mos2011}
+
+\subsection{Datenschutz}
+Wenn die Daten auf einer undurchsichtigen Cloud Infrastruktur gespeichert werden, welche dem Open Data Prinzip obliegt, so sind diese für jedermann zugänglich. Der Benutzer sollte daher darauf achten, keine kritischen oder personenbezogenen Daten, welche aus datenschutzrechtlichen Gründen nicht öffentlich gemacht werden dürfen, auf so einer Plattform zu speichern. Doch auch im Falle einer Closed Data Struktur besteht aufgrund der vorher genannten Risiken die Gefahr, dass die Daten an die Öffentlichkeit gelangen. Dies kann zum Beispiel auch daran liegen, dass gewisse Big Data Systeme wie zum Beispiel Hadoop nicht von Anfang an darauf ausgelegt wurden, geheime Unternehmensdaten zu speichern. Es ging am Anfang einfach nur darum, enorm große, unstrukturierte Datenmengen verteilt speichern zu können. Diese Design Entscheidungen machen es teilweise schwierig im Nachhinein bestimmte Sicherheitsmechanismen zu implementieren. \cite{haa2013}
+
+\subsection{Verfügbarkeit}
+Daten, welche auf einem Cloud Provider gespeichert sind obliegen dessen Verantwortung. Dies kann zu Problemen führen, wenn dieser zum Beispiel von einer anderen Organisation aufgekauft wird oder selber in Konkurs geht. Für diese Fälle muss unbedingt im Vorhinein eine Backup Strategie überlegt werden. Des Weiteren müssen auch Katastrophenfälle und die danach eventuell notwendige Daten Recovery berücksichtigt werden. \cite{mos2011}
+
+\section{Risiken aus Provider-Sicht}
+Auch aus der Sicht von Cloud Providern ergeben sich Risiken, welche die spezielle Struktur von solchen Plattformen als Ursache haben.
+
+\subsection{Hacker Attacken}
+Wie schon weiter vorher erwähnt sind vor allem Cloud Plattformen ein begehrtes Ziel für Hacker Angriffe. Dies liegt zum einen daran, dass hier sehr viele Daten gespeichert werden. Zum anderen müssen Cloud Service Provider ihre Schnittstellen für das Internet und die breite Öffentlichkeit zugänglich machen, was es potentiellen Hackern erleichtert in das System einzudringen. \cite{mos2011}
+
+\subsection{Unbemerkter Datenverlust}
+Allzu oft kommt es vor, dass Daten gestohlen werden, ohne dass die betroffene Organisation das merkt und den Cloud Provider davon informieren kann. Dieser kann daher erst sehr verspätet darauf reagieren und ein Durchdringen der Attacke an die Öffentlichkeit, was mit einem erheblichen Image Schaden verbunden ist, nicht mehr verhindern.\cite{mos2011}
+
+\subsection{Verteilte Datenspeicher}
+Ein Cloud System verteilt die Daten auf mehrere Server. Dabei muss immer darauf geachtet werden, welche Daten in welche Region oder in welches Land gespeichert werden, da es in diesem Bereich oftmals rechtliche Vorgaben seitens des Gesetzes oder auch Vorgaben der Organisation geben kann. \cite{mos2011}
+
+
 
 
 
 % --------------------------------------------------------------
-\section{Risikomanagnement im Kontext von Smart Technologien}
+\chapter{Risikomanagnement im Kontext von Smart Technologien}
 \label{sect:relevance}
 
+\section{Neue IT-Risiken durch Smart Technologies (Internet of Things)}
 
 
-% --------------------------------------------------------------
-% APPENDIX
-\begin{appendix}
 
-\pagebreak
+Es ist nur mehr eine Frage der Zeit, bis alle „Dinge“ mit dem World Wide Web kommunizieren und Daten austauschen. Wie schön dies auch klingt und unser Leben dadurch auch in gewisser Weise erleichtert wird, verbergen sich hinter diesen Maßnahmen auch Risiken, die zum Teil auch neu sind. Diese Risiken bestehen sowohl für Unternehmen als auch für Verbraucher. Jedes Gerät, dass eine Internetverbindung hat, ist zugleich eine offene Tür für Angreifer. Einige dieser Geräte haben Betriebssysteme wie Linux oder Android installiert und bringen auch dieselben Stärken und Lücken mit.
+Überwachung spielt hier eine sehr wichtige Rolle. Wenn zu bestimmten Zeitpunkten auffällige Geschehnisse auftreten, könnte dies ein Indiz dafür sein, dass etwas nicht stimmt. Mit einer Überwachungssoftware würde dieser Prozess einfach gestoppt werden. 
+\\
+\\
+Durch die gute Vernetzung der intelligenten Technologien, kann sobald sich ein Virus in ein Gerät eingenistet hat, sich ganz einfach auf andere Geräte verbreiten. Im Falle der Datenspionage kann die Privatsphäre noch stärker verletzt werden. Da die Geräte vernetzt sind und jedes davon verschiedene User Informationen enthalten, ist es für den Angreifer noch leichter alle Daten auf einen Schlag zu bekommen.
+\\
+\\
+Wenn wir die Gruppe Wearables betrachten gibt es Geräte die wichtige Funktionen Im menschlichen Körper steuern und dadurch unterstützen. Dies bringt ein Lebensgefährliches Risiko mit. Sei es ferngesteuerte Insulinpumpen oder Geräte für die Stimulation des Herzens. Hier dürfen keine Sicherheitslücken existieren, da ansonsten die Personen die diese Wearables tragen und benützen, in Lebensgefahr gebracht werden.
+\\
+\\
+Unternehmen, die den Smart Technology Trend mit dem sogenannten „Bring your own Device“ – Betriebsvereinbarungen verfolgen, gehen ebenfalls ein hohes Sicherheitsrisiko ein. Private Geräte können nur teilweise überwacht und kontrolliert werden, wodurch sensible Unternehmensdaten in falsche Hände geraten können. Um einen sinnvollen Einsatz der Smart Technologies im Unternehmen zu gewährleisten, müssen diese auch immer online sein, da ansonsten mit Ausfällen ein Schaden angerichtet werden könnte.
+\\
+\\
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{hp-iot-security.jpg}
+\caption{HP Studie Internet of Things (http://www8.hp.com/h20195/V2/GetPDF.aspx/4AA5-4759ENW.pdf)}
+\end{figure}
 
-% --------------------------------------------------------------
-% References
-\phantomsection
-\addcontentsline{toc}{section}{Literaturverzeichnis}
+\section{Spezifische Bereichsrisiken}
 
-\bibliographystyle{apalike}
+\subsection{Smart Home}
+
+\textbf{Elektronik:} Intelligente Haushaltsgeräte sowie Beleuchtungen und Fenster schaffen zusätzliche Belastung in der Hauselektronik. Smarte Technologien die über Web-basierende Apps angesteuert werden, sind anfällig für Überspannungen und Blitzschlag. Diese haben konsequenterweise Einfluss auf das gesamte elektrische System im Haus. Das Motherboard des Steuergerätes der Smart Home Technologie könnte dadurch auch einen Schaden bekommen. Hohe Reparaturkosten wären dann die Folgen.
+\\
+\\
+\textbf{Web Sicherheit:} Die Verwendung moderner und innovativer Technologie Zuhause, erleichtert uns das Leben und kann auch viel Geld einsparen. Eine Waschmaschine die mit dem WLAN verbunden ist und den Waschgang erst dann startet wenn der Strompreis am günstigsten ist, würde im Haushalt einiges an Geld einsparen. Jedoch jedes Gerät, das mit dem Internet verbunden wird, wird Möglicherweise auch zugänglich für andere. 
+Da diese Systeme zurzeit von kleineren Unternehmen entwickelt werden, kann die Sicherheit schwach ausfallen.
+\\
+\\
+\textbf{Privatsphäre:} Nachdem ein Smart Home System gehackt wurde, besteht natürlich auch das Risiko, dass die Privatsphäre verletzt werden kann. Es kann Zugang zu den Kameras, zum Smart TV oder Babyfon verschafft werden. In den USA gab es einen Vorfall, wo ein Hacker das Kind durch das Babyfon beschimpft hat.\footnote{http://www.n24.de/n24/Wissen/Technik/d/3379940/-wach-auf--du-kleine-schlampe-.html}
+Gewohnheiten sowie Urlaubsaufenthalte können ausgeforscht werden, was dazu führt, dass Kriminelle auch physischen Schaden anrichten können.
+\\
+\\
+\textbf{Versicherungsdeckung:} Wenn Smart Home Technologies verwendet werden, muss auch über eine Fern Überwachung gedacht werden. Dies dient nicht nur zur persönlichen Sicherheit sondern auch für die Versicherungsdeckung. Es müssen über Firewalls und Passwortschutz nachgedacht werden.
+
+\subsection{Smart Factory (Industrie 4.0)}
+
+So groß die Risiken sind so groß sind auch die Vorteile. Maschinen und Bauteile können sich verständigen, dadurch kann extrem genau in der Produktion kalkuliert werden. Das bringt Ressourceneffizienz weniger Materialeinsatz und eine bessere Ökobilanz. 
+Durch die Vernetzung der Einheiten in der Produktion, sind kleinere Subsysteme immer enger gekoppelt und voneinander Abhängig. Dadurch steigt die Komplexität und parallel auch das Risiko.
+\\
+\\
+Während der Einsatz von intelligenter Industrie den menschlichen Fehler als Risikofaktor senkt, könnten bei Problemen mit den Maschinen menschlicher Einsatz benötigt werden. Diese Personen müssen bestimmte Qualifikationen und Fertigkeiten besitzen um derartige Probleme lösen zu können. In so einem Fall kann möglicherweise die ganze Produktionskette lahmgelegt werden. Der "menschliche Faktor" geht sozusagen verloren. Zum Beispiel: Was passiert wenn eine Gasleitung undicht wird und es ist keiner da der es bemerkt. Solche Risiken müssen aufgespürt werden und in den Designprozess mit einfließen.
+\\
+\\
+Das finanzielle Risiko spielt demnach auch eine wesentliche Rolle. Wenn neue intelligente Technologien in der Industrie eingesetzt werden, stellt sich die Frage ob es die Mitarbeiter dazu gibt, die diese Geräte zu bedienen wissen. Es werden eventuell neue Leute mit neuen Fertigkeiten benötigt die mehr Kosten. Was passiert wenn die Integration der intelligenten Maschinen in den Arbeitsablauf fehlschlägt. Das Unternehmen könnte die geforderte Produktionsmenge nicht mehr einhalten. Dies könnte im weiteren zu einer Rufschädigung führen, was für ein Unternehmen das schlimmste wäre.
+\\
+\\
+Die bisher besprochenen Fälle können bei gut durchdachtem Risikomanagement kalkuliert und bewältigt werden. Was ist jedoch wenn ein Hacker oder ein Mitarbeiter die intelligenten Maschinen mit einem Virus infiziert. Dies würde alle schlimmen Szenarien ermöglichen. Herunterfahren von Maschinen, Produktionsdefekte, Umweltschäden bis hin zur Wirtschaftsspionage wichtiger Prozesse und Daten. Der Erholungsprozess eines Unternehmens von solch einer Attacke könnte über Jahre hinweg andauern.
+
+Versicherbarkeit?
+Hohe Wartungskosten
+
+\subsection{Smart Car}
+
+Autos werden immer intelligenter. Selbstparksysteme und Abstandsregeltempomaten sind bereits auf dem Markt. Autos kommunizieren mit anderen Autos und kontrollieren das Fahrzeug für mehr Sicherheit und Bequemlichkeit. Diese neuen intelligenten Technologien kommen bald in die Massenproduktion und werden unvermeidlich. Wie auch in den anderen Bereichen, bietet diese Innovation reichlich Platz an Risiken.
+Im Jänner 2015 wurde im System „ConnectedDrive“ von BMW eine Sicherheitslücke entdeckt. Diese Lücke erlaubte die Autos mit dem Mobiltelefon per GSM-Funk zu öffnen. Der Grund dafür war die unverschlüsselte Kommunikation, welche BMW aber abstreitet. Es waren 2,2 Millionen Autos davon betroffen und der Fehler existierte über Jahre inweg. inweg\footnote{http://www.spiegel.de/auto/aktuell/adac-entdeckt-it-sicherheitsluecke-bei-bmw-connected-drive-a-1015819.html}
+\\
+\\
+Assistenzsysteme, die für Bremsen und halten der Spur zuständig sind, können von außen manipuliert werden. Diese Manipulation hat zur Folge, dass falsche Signale simuliert werden und so die Kontrolle des Autos in andere Hände übergehen kann. Je stärker die Kopplung der Systeme zueinander steht, desto leichter ist es für Eindringlinge das System zu überlisten.
+\\
+\\
+Mit der Einführung des Smart Cars muss die Gesellschaft auch lernen umzudenken. Die Sicherheit, Unfälle durch menschlichen Fehler zu vermeiden steigt enorm, jedoch müssen Fahrzeuge nun vor Hackangriffen geschützt werden. Im Falle eines Unfalles, der durch einen Hackangriff verursacht wurde, stellt sich die Frage, wer die Schuld trägt? Diese und weitere Fragen müssen sorgfältig behandelt und geklärt werden.
+\\
+\\
+Der Umgang mit persönlichen Daten spielt auch eine sehr wichtige Rolle. Autos speichern und übertragen viele persönliche Daten wie Bewegungsprofile, Fahrweise, Verbrauch, Telefonbücher und sogar Kreditkartendaten bei automatisierter Bezahlung von Parkgebühren. Diese Daten sind für Cyberkriminelle von hohem Wert.
+\\
+\\
+Da bei Smart Cars zwei unterschiedliche Branchen aufeinandertreffen, bringt dies auch ein gewisses Risiko mit.  Während in der IT monatliche Zyklen Standard sind, ist man in der Autoindustrie eher den Jahreszyklus gewöhnt. 
+
+\section{Best Practices beim Management von Smart-Technology-Risiken}
+
+Eine routinierte Sicherheitsüberprüfung auf den Geräten und den verbundenen Komponenten ist das A und O. Aufgrund der Menge der Geräte muss diese automatisiert erfolgen. Die zu überprüfenden Komponenten sind:
+
+\begin{itemize}
+\item Web-Schnittstelle
+\item Netzwerkübertragung
+\item Ports
+\item Authentifizierung / Autorisierung
+\item Cloud communication
+\end{itemize}
+Es müssen Securiy-Policies entwickelt werden die jedes einzelne Gerät erfüllen muss. Wenn diese Standards einmal aufgesetzt und danach aktuell gehalten werden, ist das eine hohe Risikominimierung.
+\\
+\\
+Damit die Sicherheit auch Gewährleistet ist, muss dieser Aspekt im ganzen Product-Lifecycle angewandt werden. Die frühe Begutachtung von Prozessergebnissen hält das Risiko gering. Softwareupdates sind somit bei Auftreten von Fehlern sehr wichtig. Wenn diese Updates schnell und routiniert eingespielt werden, bleibt das System bzw. die Geräte immer auf dem neuesten Sicherheitsstand.
+
+
+\bibliographystyle{acm}
 \bibliography{risk2015}
-
-\pagebreak
-
-% --------------------------------------------------------------
-% Abbreviations
-\section*{Abkürzungen}
- \addcontentsline{toc}{section}{Abkürzungen}
- 
- \begin{description}
-  \item[Ex] Example
-  \item[WP] Work Package
- \end{description}
-
-\end{appendix}
-
 
 \end{document}
